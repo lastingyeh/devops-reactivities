@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  api:
+    # image: mcr.microsoft.com/dotnet/sdk:5.0
+    container_name: api
+    image: lasting/api
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    # environment:
+    #   - ASPNETCORE_ENVIRONMENT=Development
+    #   - ASPNETCORE_URLS=http://+:5000
+    #   - DOTNET_USE_POLLING_FILE_WATCHER=1
+    volumes:
+      - .:/app
+      - /app/API/bin
+      - /app/API/obj
+      - /app/Application/bin
+      - /app/Application/obj
+      - /app/Domain/bin
+      - /app/Domain/obj
+      - /app/Persistence/bin
+      - /app/Persistence/obj
+    ports:
+      - 5000:5000
+    # command: bash -c "dotnet restore & dotnet watch run --no-launch-profile"
+    depends_on: 
+      - db
+    links:
+      - db
+  app:
+    container_name: app
+    image: lasting/client
+    build: 
+      context: client-app
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./client-app/.:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+  db:
+    container_name: db
+    restart: always
+    # networks: 
+    #   - myappnetwork
+    image: mcr.microsoft.com/mssql/server
+    environment: 
+      - SA_PASSWORD=Pa$$w0rd
+      - ACCEPT_EULA=Y
+    # docker volume inspect mssqlsystem / mssqluser
+    volumes:
+      - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql
+      - /var/lib/docker/volumes/mssqluser/_data:/var/opt/sqlserver

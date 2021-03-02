@@ -1,0 +1,10 @@
+**/.git
+**/.DS_Store
+**/node_modules
+*.log
+Dockerfile.dev
+docker-compose*
+.dockerignore
+.git
+.gitignore
+.vscode

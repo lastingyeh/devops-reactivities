@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  api:
+    # image: mcr.microsoft.com/dotnet/sdk:5.0
+    container_name: api
+    image: lasting/api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    # command: bash -c "dotnet restore & dotnet watch run --no-launch-profile"
+    depends_on: 
+      - db
+    links:
+      - db
+  app:
+    container_name: app
+    image: lasting/client
+    build: 
+      context: client-app
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+  db:
+    container_name: db
+    restart: always
+    # networks: 
+    #   - myappnetwork
+    image: mcr.microsoft.com/mssql/server
+    environment: 
+      - SA_PASSWORD=Pa$$w0rd
+      - ACCEPT_EULA=Y
+    # docker volume inspect mssqlsystem / mssqluser
+    volumes:
+      - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql
+      - /var/lib/docker/volumes/mssqluser/_data:/var/opt/sqlserver
