@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Container } from 'semantic-ui-react';
 import { Activity } from './models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 import { v4 as uuid } from 'uuid';
+import agent from '../api/agent';
+import LoadingComponent from './LoadingComponent';
 
 function App() {
 	const [activities, setActivities] = useState<Activity[]>([]);
-	const [selectedActivity, setSelectedActivity] = useState<
-		Activity | undefined
-	>(undefined);
+	const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
 	const [editMode, setEditMode] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [submitting, setSubmitting] = useState(false);
 
 	useEffect(() => {
-		axios
-			.get<Activity[]>('http://localhost:5000/api/activities')
-			.then(response => {
-				setActivities(response.data);
+		agent.Activities.list().then(response => {
+			let activities: Activity[] = [];
+
+			response.forEach(activity => {
+				activity.date = activity.date.split('T')[0];
+				activities.push(activity);
 			});
+
+			setActivities(response);
+			setLoading(false);
+		});
 	}, []);
 
 	function handleSelectActivity(id: string) {
@@ -38,20 +45,44 @@ function App() {
 		setEditMode(false);
 	}
 
-	function handleCreateOrEditActivity(activity: Activity) {
-		activity.id
-			? setActivities([
-					...activities.filter(x => x.id !== activity.id),
-					activity,
-			  ])
-			: setActivities([...activities, { ...activity, id: uuid() }]);
+	async function handleCreateOrEditActivity(activity: Activity) {
+		try {
+			setSubmitting(true);
 
-		setEditMode(false);
-		setSelectedActivity(activity);
+			if (activity.id) {
+				await agent.Activities.update(activity);
+				setActivities([...activities.filter(x => x.id !== activity.id), activity]);
+			} else {
+				activity.id = uuid();
+				await agent.Activities.create(activity);
+				setActivities([...activities, activity]);
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setSelectedActivity(activity);
+			setSubmitting(false);
+		}
 	}
 
-	function handleDeleteActivity(id: string) {
-		setActivities([...activities.filter(x => x.id !== id)]);
+	async function handleDeleteActivity(id: string) {
+		try {
+			setSubmitting(true);
+
+			await agent.Activities.delete(id);
+
+			setActivities([...activities.filter(x => x.id !== id)]);
+		} catch (error) {
+		} finally {
+			setEditMode(false);
+			setSubmitting(false);
+			setSelectedActivity(undefined);
+		}
+	}
+
+	// loading
+	if (loading) {
+		return <LoadingComponent content='Loading app' />;
 	}
 
 	return (
@@ -67,7 +98,8 @@ function App() {
 					openForm={handleFormOpen}
 					closeForm={handleFormClose}
 					createOrEdit={handleCreateOrEditActivity}
-          deleteActivity={handleDeleteActivity}
+					deleteActivity={handleDeleteActivity}
+					submitting={submitting}
 				/>
 			</Container>
 		</>
