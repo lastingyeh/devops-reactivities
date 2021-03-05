@@ -44,6 +44,7 @@ namespace API
             {
                 endpoints.MapControllers();
             });
+            
         }
     }
 }

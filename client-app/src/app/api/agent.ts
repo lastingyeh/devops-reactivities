@@ -1,6 +1,5 @@
 import { Activity } from './../layout/models/activity';
 import axios, { AxiosResponse } from 'axios';
-import { act } from 'react-dom/test-utils';
 
 const sleep = (delay: number) => new Promise(resolve => setTimeout(resolve, delay));
 
