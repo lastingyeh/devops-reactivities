@@ -1,7 +1,6 @@
 import { Activity } from './../layout/models/activity';
 import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
-import { v4 as uuid } from 'uuid';
 
 export default class ActivityStore {
 	activityRegistry = new Map<string, Activity>();
@@ -38,9 +37,7 @@ export default class ActivityStore {
 			const activities = await agent.Activities.list();
 
 			activities.forEach(activity => {
-				activity.date = activity.date.split('T')[0];
-				this.activityRegistry.set(activity.id, activity);
-				// this.activities.push(activity);
+				this.setActivity(activity);
 			});
 		} catch (error) {
 			console.log(error);
@@ -48,26 +45,37 @@ export default class ActivityStore {
 		this.setLoadingInitial(false);
 	};
 
-	selectActivity = (id: string) => {
-		this.selectedActivity = this.activityRegistry.get(id);
+	private getActivity = (id: string) => this.activityRegistry.get(id);
+
+	private setActivity = (activity: Activity) => {
+		activity.date = activity.date.split('T')[0];
+		this.activityRegistry.set(activity.id, activity);
 	};
 
-	cancelSelectedActivity = () => {
-		this.selectedActivity = undefined;
-	};
+	loadActivity = async (id: string) => {
+		let activity = this.getActivity(id);
 
-	openForm = (id?: string) => {
-		id ? this.selectActivity(id) : this.cancelSelectedActivity();
-		this.editMode = true;
-	};
+		if (!activity) {
+			this.loadingInitial = true;
+			try {
+				activity = await agent.Activities.details(id);
+				this.setActivity(activity);
+			} catch (error) {
+				console.log(error);
+			}
 
-	closeForm = () => {
-		this.editMode = false;
+			this.setLoadingInitial(false);
+		}
+
+		runInAction(() => {
+			this.selectedActivity = activity;
+		});
+
+    return activity;
 	};
 
 	createActivity = async (activity: Activity) => {
 		this.loading = true;
-		activity.id = uuid();
 
 		try {
 			await agent.Activities.create(activity);
