@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import ActivityList from './ActivityList';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import ActivityFilters from './ActivityFilters';
 
 function ActivityDashboard() {
 	const {
@@ -20,7 +21,7 @@ function ActivityDashboard() {
 		<Grid>
 			<Grid.Column width='10'>{activitiesByDate.length > 0 && <ActivityList />}</Grid.Column>
 			<Grid.Column width='6'>
-				<h2>Activity filter</h2>
+				<ActivityFilters />
 			</Grid.Column>
 		</Grid>
 	);

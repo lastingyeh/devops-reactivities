@@ -94,6 +94,8 @@
       $ npm install mobx mobx-react-lite
 
       $ npm install react-router-dom
+
+      $ npm install react-calendar
       
 
 ### References

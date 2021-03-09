@@ -1,4 +1,4 @@
-import { Activity } from './../layout/models/activity';
+import { Activity } from '../models/activity';
 import axios, { AxiosResponse } from 'axios';
 
 const sleep = (delay: number) => new Promise(resolve => setTimeout(resolve, delay));

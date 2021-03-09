@@ -10,6 +10,7 @@
     "mobx": "^6.1.8",
     "mobx-react-lite": "^3.2.0",
     "react": "^17.0.1",
+    "react-calendar": "^3.3.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
@@ -47,6 +48,7 @@
     "@types/jest": "^26.0.20",
     "@types/node": "^12.20.4",
     "@types/react": "^17.0.2",
+    "@types/react-calendar": "^3.1.4",
     "@types/react-dom": "^17.0.1",
     "@types/react-router-dom": "^5.1.7",
     "@types/uuid": "^8.3.0"
