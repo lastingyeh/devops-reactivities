@@ -16,6 +16,10 @@
 
       $ dotnet ef migrations add InitialCreate -p Persistence -s API
 
+- drop 
+
+      $ dotnet ef database drop -s API -p Persistence
+
 ---
 ### git
 
@@ -96,8 +100,9 @@
       $ npm install react-router-dom
 
       $ npm install react-calendar
-      
 
+      $ npm install react-toastify
+      
 ### References
 
 - [Udemy courses](https://www.udemy.com/course/complete-guide-to-building-an-app-with-net-core-and-react/)
