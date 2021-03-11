@@ -102,6 +102,12 @@
       $ npm install react-calendar
 
       $ npm install react-toastify
+
+      $ npm install formik
+
+      $ npm install yup
+
+      $ npm install datepicker
       
 ### References
 
