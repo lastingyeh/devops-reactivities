@@ -42,7 +42,7 @@ services:
       - 3000:3000
   db:
     container_name: db
-    restart: always
+    user: root
     # networks: 
     #   - myappnetwork
     image: mcr.microsoft.com/mssql/server
