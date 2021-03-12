@@ -47,8 +47,9 @@ services:
     #   - myappnetwork
     image: mcr.microsoft.com/mssql/server
     environment: 
-      - SA_PASSWORD=Pa$$w0rd
-      - ACCEPT_EULA=Y
+      - "SA_PASSWORD=1StrongPwd!!"
+      - "ACCEPT_EULA=Y"
+      # - "MSSQL_PID=Express"
     # docker volume inspect mssqlsystem / mssqluser
     volumes:
       - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
@@ -11,9 +11,26 @@ import TestErrors from '../../features/errors/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/errors/NotFound';
 import ServerError from '../../features/errors/ServerError';
+import LoginForm from '../../features/users/LoginForm';
+import { useStore } from '../stores/store';
+import LoadingComponent from './LoadingComponent';
 
 function App() {
 	const { key } = useLocation();
+	const {
+		commonStore: { token, setAppLoaded, appLoaded },
+		userStore: { getUser },
+	} = useStore();
+
+	useEffect(() => {
+		if (token) {
+			getUser().finally(() => setAppLoaded());
+		} else {
+			setAppLoaded();
+		}
+	}, [token, setAppLoaded, getUser]);
+
+  if(!appLoaded) return <LoadingComponent content='Loading activities...'/>
 
 	return (
 		<>
@@ -29,6 +46,7 @@ function App() {
 								<Route exact path='/activities' component={ActivityDashboard} />
 								<Route path='/activities/:id' component={ActivityDetails} />
 								<Route key={key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
+								<Route path='/login' component={LoginForm} />
 								<Route path='/errors' component={TestErrors} />
 								<Route path='/server-error' component={ServerError} />
 								<Route component={NotFound} />

@@ -28,6 +28,29 @@
       $ dotnet new gitignore
 
 ---
+
+### wsl for windows 10
+
+  - [setup](https://docs.microsoft.com/zh-tw/windows/wsl/install-win10)
+
+  - [reset ubuntu password as if existed](https://docs.microsoft.com/zh-tw/windows/wsl/user-support) 
+
+        $ wsl -u root
+
+        $ passwd <username>
+  
+  - version
+
+        # lsb_release -a
+
+  - install docker 
+        
+        # sh install-docker.sh
+
+        # sudo systemctl enable docker
+
+---
+
 ### docker
 
 - build images (producton)
@@ -44,6 +67,7 @@
 
       $ docker run -p 1433:1433 -v mssqlsystem:/var/opt/mssql -v mssqluser:/var/opt/sqlserver -e ACCEPT_EULA=Y -e SA_PASSWORD=Pa$$w0rd --name msdb mcr.microsoft.com/mssql/server
 
+---
 ### docker-compose
 
 - [resolve volume issues mssql used](https://sqldbawithabeard.com/2019/03/26/persisting-databases-with-named-volumes-on-windows-with-docker-compose/)
