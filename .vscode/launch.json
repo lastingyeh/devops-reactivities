@@ -4,16 +4,25 @@
     // 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
-            "name": "Docker .NET Core Attach",
-            "type": "docker",
+            "name": ".NET Core Docker Attach",
+            "type": "coreclr",
             "request": "attach",
-            "platform": "netCore",
-            "sourceFileMap": {
-                "/src": "${workspaceFolder}"
+            "processId": "${command:pickRemoteProcess}",
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "exec",
+                    "-i",
+                    "api"
+                ],
+                "debuggerPath": "/root/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceRoot}",
+                "quoteArgs": false
             },
-            "containerName": "api-server"
-        }
+            "sourceFileMap": {
+                "/work": "${workspaceRoot}"
+            }
+        },
     ]
 }

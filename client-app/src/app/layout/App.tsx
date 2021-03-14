@@ -14,49 +14,55 @@ import ServerError from '../../features/errors/ServerError';
 import LoginForm from '../../features/users/LoginForm';
 import { useStore } from '../stores/store';
 import LoadingComponent from './LoadingComponent';
+import ModalContainer from '../common/modals/ModalContainer';
 
 function App() {
-	const { key } = useLocation();
-	const {
-		commonStore: { token, setAppLoaded, appLoaded },
-		userStore: { getUser },
-	} = useStore();
+  const { key } = useLocation();
+  const {
+    commonStore: { token, setAppLoaded, appLoaded },
+    userStore: { getUser },
+  } = useStore();
 
-	useEffect(() => {
-		if (token) {
-			getUser().finally(() => setAppLoaded());
-		} else {
-			setAppLoaded();
-		}
-	}, [token, setAppLoaded, getUser]);
+  useEffect(() => {
+    if (token) {
+      getUser().finally(() => setAppLoaded());
+    } else {
+      setAppLoaded();
+    }
+  }, [token, setAppLoaded, getUser]);
 
-  if(!appLoaded) return <LoadingComponent content='Loading activities...'/>
+  if (!appLoaded) return <LoadingComponent content='Loading activities...' />;
 
-	return (
-		<>
-			<ToastContainer position='bottom-right' hideProgressBar />
-			<Route exact path='/' component={HomePage} />
-			<Route
-				path={'/(.+)'}
-				render={() => (
-					<>
-						<NavBar />
-						<Container style={{ marginTop: '7em' }}>
-							<Switch>
-								<Route exact path='/activities' component={ActivityDashboard} />
-								<Route path='/activities/:id' component={ActivityDetails} />
-								<Route key={key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
-								<Route path='/login' component={LoginForm} />
-								<Route path='/errors' component={TestErrors} />
-								<Route path='/server-error' component={ServerError} />
-								<Route component={NotFound} />
-							</Switch>
-						</Container>
-					</>
-				)}
-			/>
-		</>
-	);
+  return (
+    <>
+      <ToastContainer position='bottom-right' hideProgressBar />
+      <ModalContainer />
+      <Route exact path='/' component={HomePage} />
+      <Route
+        path={'/(.+)'}
+        render={() => (
+          <>
+            <NavBar />
+            <Container style={{ marginTop: '7em' }}>
+              <Switch>
+                <Route exact path='/activities' component={ActivityDashboard} />
+                <Route path='/activities/:id' component={ActivityDetails} />
+                <Route
+                  key={key}
+                  path={['/createActivity', '/manage/:id']}
+                  component={ActivityForm}
+                />
+                <Route path='/login' component={LoginForm} />
+                <Route path='/errors' component={TestErrors} />
+                <Route path='/server-error' component={ServerError} />
+                <Route component={NotFound} />
+              </Switch>
+            </Container>
+          </>
+        )}
+      />
+    </>
+  );
 }
 
 export default observer(App);

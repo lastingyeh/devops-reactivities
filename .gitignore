@@ -9,9 +9,8 @@ appsettings.json
 *.user
 *.userosscache
 *.sln.docstates
-*debug.yml
 *.sh
-
+package-lock.json
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

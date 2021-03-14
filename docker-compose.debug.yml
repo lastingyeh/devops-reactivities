@@ -2,26 +2,26 @@ version: '3.7'
 
 services:
   api:
-    # image: mcr.microsoft.com/dotnet/sdk:5.0
     container_name: api
     image: lasting/api
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.debug
+      target: debug
     # environment:
     #   - ASPNETCORE_ENVIRONMENT=Development
     #   - ASPNETCORE_URLS=http://+:5000
     #   - DOTNET_USE_POLLING_FILE_WATCHER=1
     volumes:
-      - .:/app
-      - /app/API/bin
-      - /app/API/obj
-      - /app/Application/bin
-      - /app/Application/obj
-      - /app/Domain/bin
-      - /app/Domain/obj
-      - /app/Persistence/bin
-      - /app/Persistence/obj
+      - .:/work/
+      - /work/API/bin
+      - /work/API/obj
+      - /work/Application/bin
+      - /work/Application/obj
+      - /work/Domain/bin
+      - /work/Domain/obj
+      - /work/Persistence/bin
+      - /work/Persistence/obj
     ports:
       - 5000:5000
     # command: bash -c "dotnet restore & dotnet watch run --no-launch-profile"

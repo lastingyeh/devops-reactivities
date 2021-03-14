@@ -2,9 +2,6 @@ README.md
 
 docker-my/**
 Dockerfile*
-docker-compose.dev*
-docker-compose.debug*
-
 **/client-app
 
 **/.classpath

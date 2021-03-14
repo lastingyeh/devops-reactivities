@@ -1,0 +1,39 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as debug
+
+# install debugger for NET Core
+RUN apt-get update
+RUN apt-get install -y unzip
+RUN curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l ~/vsdbg 
+
+RUN mkdir /work/
+RUN mkdir /work/API
+WORKDIR /work/API
+
+
+COPY ./API/API.csproj /work/API/API.csproj
+COPY ./Application/Application.csproj /work/Application/Application.csproj
+COPY ./Domain/Domain.csproj /work/Domain/Domain.csproj
+COPY ./Persistence/Persistence.csproj /work/Persistence/Persistence.csproj
+RUN dotnet restore
+
+COPY . /work/
+RUN mkdir /out/
+
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=1  
+ENV ASPNETCORE_URLS=http://+:5000  
+EXPOSE 5000
+
+RUN dotnet publish --no-restore --output /out/ --configuration Release
+
+ENTRYPOINT [ "dotnet", "watch", "run", "--no-launch-profile" ]
+
+# start new Image
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 as prod
+
+RUN mkdir /app/
+WORKDIR /app/
+COPY --from=debug /out/ /app/
+RUN chmod +x /app/
+CMD dotnet API.dll
+
