@@ -47,6 +47,8 @@
         
         # sh install-docker.sh
 
+        # sudo service docker start
+
         # sudo systemctl enable docker
 
 ---

@@ -36,14 +36,14 @@ function HomePage() {
               size='huge'
               inverted
             >
-              Login!
+              Login
             </Button>
             <Button
               onClick={() => openModal(<h1>Register</h1>)}
               size='huge'
               inverted
             >
-              Register!
+              Register
             </Button>
           </>
         )}

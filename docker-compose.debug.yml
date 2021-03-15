@@ -36,8 +36,8 @@ services:
       context: client-app
       dockerfile: Dockerfile.dev
     volumes:
-      - ./client-app/.:/app
-      - /app/node_modules
+      - ./client-app:/home/node/app
+      - /home/node/app/node_modules
     ports:
       - 3000:3000
   db:
