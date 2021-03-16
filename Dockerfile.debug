@@ -14,6 +14,7 @@ COPY ./API/API.csproj /work/API/API.csproj
 COPY ./Application/Application.csproj /work/Application/Application.csproj
 COPY ./Domain/Domain.csproj /work/Domain/Domain.csproj
 COPY ./Persistence/Persistence.csproj /work/Persistence/Persistence.csproj
+COPY ./Infrastructure/Infrastructure.csproj /work/Infrastructure/Infrastructure.csproj
 RUN dotnet restore
 
 COPY . /work/

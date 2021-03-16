@@ -6,46 +6,31 @@ import { useStore } from '../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 
 function LoginForm() {
-  const {
-    userStore: { login },
-  } = useStore();
+	const {
+		userStore: { login },
+	} = useStore();
 
-  return (
-    <Formik
-      initialValues={{ email: '', password: '', error: null }}
-      onSubmit={(values, { setErrors }) =>
-        login(values).catch((error) =>
-          setErrors({ error: 'Invalid email or password' })
-        )
-      }
-    >
-      {({ handleSubmit, isSubmitting, errors }) => (
-        <Form className='ui form' onSubmit={handleSubmit}>
-          <Header as='h2' content='Login to Reactivities' />
-          <MyTextInput name='email' placeholder='Email' />
-          <MyTextInput name='password' placeholder='Password' type='password' />
-          <ErrorMessage
-            name='error'
-            render={() => (
-              <Label
-                style={{ marginBottom: 10 }}
-                basic
-                color='red'
-                content={errors.error}
-              />
-            )}
-          />
-          <Button
-            loading={isSubmitting}
-            positive
-            content='Login'
-            type='submit'
-            fluid
-          />
-        </Form>
-      )}
-    </Formik>
-  );
+	return (
+		<Formik
+			initialValues={{ email: '', password: '', error: null }}
+			onSubmit={(values, { setErrors }) =>
+				login(values).catch(error => setErrors({ error: 'Invalid email or password' }))
+			}
+		>
+			{({ handleSubmit, isSubmitting, errors }) => (
+				<Form className='ui form' onSubmit={handleSubmit}>
+					<Header as='h2' content='Login to Reactivities' color='teal' textAlign='center' />
+					<MyTextInput name='email' placeholder='Email' />
+					<MyTextInput name='password' placeholder='Password' type='password' />
+					<ErrorMessage
+						name='error'
+						render={() => <Label style={{ marginBottom: 10 }} basic color='red' content={errors.error} />}
+					/>
+					<Button loading={isSubmitting} positive content='Login' type='submit' fluid />
+				</Form>
+			)}
+		</Formik>
+	);
 }
 
 export default observer(LoginForm);

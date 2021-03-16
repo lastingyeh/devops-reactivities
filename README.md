@@ -6,11 +6,11 @@
 
 - install dotnet-ef
 
-      $ dotnet tool install dotnet-ef --global --version 5.0.3
+      $ dotnet tool install dotnet-ef --global --version 5.0.4
 
 - update dotnet-ef
 
-      $ dotnet tool update dotnet-ef --global --version 5.0.3
+      $ dotnet tool update dotnet-ef --global --version 5.0.4
 
 - migrations
 

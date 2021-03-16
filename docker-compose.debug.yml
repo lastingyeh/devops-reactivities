@@ -22,6 +22,8 @@ services:
       - /work/Domain/obj
       - /work/Persistence/bin
       - /work/Persistence/obj
+      - /work/Infrastructure/bin
+      - /work/Infrastructure/obj
     ports:
       - 5000:5000
     # command: bash -c "dotnet restore & dotnet watch run --no-launch-profile"
@@ -40,6 +42,8 @@ services:
       - /home/node/app/node_modules
     ports:
       - 3000:3000
+    depends_on: 
+      - api
   db:
     container_name: db
     user: root
