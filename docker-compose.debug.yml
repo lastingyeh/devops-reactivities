@@ -31,6 +31,8 @@ services:
       - db
     links:
       - db
+    # secrets:
+    #   - cloudinaryName
   app:
     container_name: app
     image: lasting/client
@@ -58,3 +60,6 @@ services:
     volumes:
       - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql
       - /var/lib/docker/volumes/mssqluser/_data:/var/opt/sqlserver
+# secrets:
+#   cloudinaryName: 
+#     external: true
