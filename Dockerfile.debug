@@ -9,7 +9,6 @@ RUN mkdir /work/
 RUN mkdir /work/API
 WORKDIR /work/API
 
-
 COPY ./API/API.csproj /work/API/API.csproj
 COPY ./Application/Application.csproj /work/Application/Application.csproj
 COPY ./Domain/Domain.csproj /work/Domain/Domain.csproj

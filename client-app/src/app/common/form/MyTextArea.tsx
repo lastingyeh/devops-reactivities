@@ -14,7 +14,7 @@ export default function MyTextArea(props: Props) {
 
 	return (
 		<Form.Field error={meta.touched && !!meta.error}>
-			<Label>{props.label}</Label>
+			{/* <Label>{props.label}</Label> */}
 			<textarea {...field} {...props} />
 			{meta.touched && meta.error ? (
 				<Label basic color='red'>

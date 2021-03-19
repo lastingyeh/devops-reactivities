@@ -134,6 +134,10 @@
       $ npm install yup
 
       $ npm install datepicker
+
+      $ npm install react-dropzone
+
+      $ npm install react-cropper
       
 ### References
 
