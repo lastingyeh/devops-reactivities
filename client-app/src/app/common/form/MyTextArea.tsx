@@ -5,7 +5,7 @@ import { Form, Label } from 'semantic-ui-react';
 interface Props {
 	placeholder: string;
 	name: string;
-  row: number;
+  rows: number;
 	label?: string;
 }
 
