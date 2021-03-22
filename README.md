@@ -138,6 +138,8 @@
       $ npm install react-dropzone
 
       $ npm install react-cropper
+
+      $ npm install @microsoft/signalr
       
 ### References
 
