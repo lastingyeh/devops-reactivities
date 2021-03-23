@@ -140,6 +140,8 @@
       $ npm install react-cropper
 
       $ npm install @microsoft/signalr
+
+      $ npm install react-infinite-scroller
       
 ### References
 
