@@ -57,6 +57,8 @@ services:
       - "ACCEPT_EULA=Y"
       # - "MSSQL_PID=Express"
     # docker volume inspect mssqlsystem / mssqluser
+    # ports:
+    #   - 1433:1433
     volumes:
       - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql
       - /var/lib/docker/volumes/mssqluser/_data:/var/opt/sqlserver
