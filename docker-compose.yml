@@ -1,13 +1,26 @@
 version: '3.7'
 
 services:
+  nginx:
+    container_name: proxy
+    image: lasting/proxy
+    depends_on:
+      - api
+      - client
+    restart: always
+    build: 
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - 3000:80
   api:
     # image: mcr.microsoft.com/dotnet/sdk:5.0
     container_name: api
     image: lasting/api
     build:
+      dockerfile: Dockerfile.debug
       context: .
-      dockerfile: Dockerfile
+      target: prod
     ports:
       - 5000:5000
     # command: bash -c "dotnet restore & dotnet watch run --no-launch-profile"
@@ -15,23 +28,31 @@ services:
       - db
     links:
       - db
-  app:
-    container_name: app
+  client:
+    container_name: client
     image: lasting/client
     build: 
-      context: client-app
       dockerfile: Dockerfile
-    ports:
-      - 3000:3000
+      context: ./client-app
+    # ports:
+    #   - 3000:3000
+    depends_on:
+      - api
+    links:
+      - api
+    # environment: 
+    #   - "REACT_APP_CHAT_URL=api:5000/chat"
+    #   - "REACT_APP_API_URL=api:5000/api"
   db:
     container_name: db
+    user: root
     restart: always
     # networks: 
     #   - myappnetwork
     image: mcr.microsoft.com/mssql/server
     environment: 
-      - SA_PASSWORD=Pa$$w0rd
-      - ACCEPT_EULA=Y
+      - "SA_PASSWORD=1StrongPwd!!"
+      - "ACCEPT_EULA=Y"
     # docker volume inspect mssqlsystem / mssqluser
     volumes:
       - /var/lib/docker/volumes/mssqlsystem/_data:/var/opt/mssql

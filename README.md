@@ -51,6 +51,8 @@
 
         # sudo systemctl enable docker
 
+  - (failed to connection docker hub)[https://github.com/docker/cli/issues/2618]
+
 ---
 
 ### docker

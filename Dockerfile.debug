@@ -34,6 +34,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 as prod
 RUN mkdir /app/
 WORKDIR /app/
 COPY --from=debug /out/ /app/
+
+ENV ASPNETCORE_URLS=http://*:5000
+EXPOSE 5000
+
 RUN chmod +x /app/
 CMD dotnet API.dll
 
