@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Segment, Header, Image, Button } from 'semantic-ui-react';
+import { Container, Segment, Header, Image, Button, Divider } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
 import LoginForm from '../users/LoginForm';
 import RegisterForm from '../users/RegisterForm';
 
 function HomePage() {
 	const {
-		userStore: { isLoggedIn, logout, login },
+		userStore: { isLoggedIn, facebookLogin, fbLoading },
 		modalStore: { openModal },
 	} = useStore();
 	return (
@@ -32,6 +32,12 @@ function HomePage() {
 						</Button>
 						<Button onClick={() => openModal(<RegisterForm />)} size='huge' inverted>
 							Register
+						</Button>
+						<Divider horizontal inverted>
+							Or
+						</Divider>
+						<Button loading={fbLoading} onClick={facebookLogin} size='huge' inverted color='facebook'>
+							Login with Facebook
 						</Button>
 					</>
 				)}

@@ -21,16 +21,16 @@ function App() {
 	const { key } = useLocation();
 	const {
 		commonStore: { token, setAppLoaded, appLoaded },
-		userStore: { getUser },
+		userStore: { getUser, getFacebookLoginStatus },
 	} = useStore();
 
 	useEffect(() => {
 		if (token) {
 			getUser().finally(() => setAppLoaded());
 		} else {
-			setAppLoaded();
+			getFacebookLoginStatus().then(() => setAppLoaded());
 		}
-	}, [token, setAppLoaded, getUser]);
+	}, [token, setAppLoaded, getUser, getFacebookLoginStatus]);
 
 	if (!appLoaded) return <LoadingComponent content='Loading activities...' />;
 

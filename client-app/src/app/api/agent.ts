@@ -25,9 +25,9 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(
 	async response => {
-        if(process.env.NODE_ENV === 'development'){
-            await sleep(1000);
-        }
+		if (process.env.NODE_ENV === 'development') {
+			await sleep(1000);
+		}
 
 		const pagination = response.headers['pagination'];
 
@@ -100,6 +100,7 @@ const Account = {
 	current: () => requests.get<User>('/account'),
 	login: (user: UserFormValues) => requests.post<User>('/account/login', user),
 	register: (user: UserFormValues) => requests.post<User>('/account/register', user),
+	fbLogin: (accessToken: string) => requests.post<User>(`/account/fbLogin?accessToken=${accessToken}`, {}),
 };
 
 const Profiles = {
