@@ -30,8 +30,11 @@ namespace API.Extensions
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyHeader()
-                        .AllowCredentials().WithOrigins(config.GetSection("WithOrigins").Value);
+                    policy.AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .WithExposedHeaders("WWW-Authenticate", "Pagination")
+                        .WithOrigins(config.GetSection("WithOrigins").Value);
                 });
             });
 

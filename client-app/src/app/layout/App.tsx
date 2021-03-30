@@ -30,7 +30,7 @@ function App() {
 		} else {
 			getFacebookLoginStatus().then(() => setAppLoaded());
 		}
-	}, [token, setAppLoaded, getUser, getFacebookLoginStatus]);
+	}, [setAppLoaded, getUser, getFacebookLoginStatus]);
 
 	if (!appLoaded) return <LoadingComponent content='Loading activities...' />;
 
